@@ -29,7 +29,7 @@ const Home = (): JSX.Element => {
     if (product.id in sumAmount) {
       sumAmount[product.id]++;
     } else {
-      sumAmount[product.id] = 0;
+      sumAmount[product.id] = 1;
     }
     return sumAmount;
   }, {} as CartItemsAmount);
@@ -43,12 +43,8 @@ const Home = (): JSX.Element => {
   }, []);
 
   function handleAddProduct(id: number) {
-    addProduct(id).then(() =>
-      localStorage.setItem("@RocketShoes:cart", JSON.stringify(cart))
-    );
+    addProduct(id);
   }
-
-  // console.log("CARTITEMSAMOUNT", cartItemsAmount);
 
   return (
     <ProductList>
