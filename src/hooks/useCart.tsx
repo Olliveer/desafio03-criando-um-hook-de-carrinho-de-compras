@@ -109,7 +109,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     try {
       // TODO
     } catch {
-      // TODO
+      toast.error("Erro na remoção do produto");
     }
   };
 
@@ -118,22 +118,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-      const response = await api.get(`/products/${productId}`);
-
-      const { data } = response;
-
-      setCart([
-        ...cart,
-        {
-          id: data.id,
-          title: data.title,
-          price: data.price,
-          image: data.image,
-          amount: amount,
-        },
-      ]);
+      cart.map((product, index) => {
+        if (product.id === productId) {
+          cart[index].amount = amount - 1;
+        }
+        setCart([...cart]);
+        return localStorage.setItem("@RocketShoes:cart", JSON.stringify(cart));
+      });
     } catch {
-      // TODO
+      toast.error("Erro ao subtrair do produto");
+      return;
     }
   };
 
