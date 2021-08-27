@@ -21,16 +21,19 @@ interface CartItemsAmount {
   [key: number]: number;
 }
 
+// if (product.id in sumAmount) {
+//   sumAmount[product.id]++;
+// } else {
+//   sumAmount[product.id] = 1;
+// }
+// return sumAmount;
+
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    if (product.id in sumAmount) {
-      sumAmount[product.id]++;
-    } else {
-      sumAmount[product.id] = 1;
-    }
+    sumAmount[product.id] = product.amount;
     return sumAmount;
   }, {} as CartItemsAmount);
 
@@ -38,7 +41,6 @@ const Home = (): JSX.Element => {
     async function loadProducts() {
       await api.get("/products").then((response) => setProducts(response.data));
     }
-
     loadProducts();
   }, []);
 
