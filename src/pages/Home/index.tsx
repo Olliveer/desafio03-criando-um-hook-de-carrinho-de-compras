@@ -21,13 +21,6 @@ interface CartItemsAmount {
   [key: number]: number;
 }
 
-// if (product.id in sumAmount) {
-//   sumAmount[product.id]++;
-// } else {
-//   sumAmount[product.id] = 1;
-// }
-// return sumAmount;
-
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
